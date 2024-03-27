@@ -22,6 +22,7 @@ Bot.on('messageCreate', async (message) => {
     if (!CHANNELS.filter(c => c.parentID == channels.owo_grind_category).map(c => c.id).includes(message.channel.id)) return;
 
     if (message.author.id == bots.OwO) return;
+    if (message.author.id == Bot.user.id) return;
 
     await message.delete();
 });
