@@ -1,10 +1,9 @@
 const { Client, Constants: { InteractionTypes } } = require('eris');
 const axios = require('axios').default;
 
-const { bots: { miku: { token: TOKEN } } } = require('../tokens.json');
-const { private_guild, owo_grind_category, bots, channels } = require('./config.json');
+const { token, private_guild, bots, channels } = require('./config.json');
 
-const Bot = new Client(TOKEN, {
+const Bot = new Client(token, {
     intents: 513,
     restMode: true,
     defaultImageFormat: 'png'
@@ -20,7 +19,7 @@ Bot.on('messageCreate', async (message) => {
     const CHANNELS = Bot.guilds.get(private_guild)?.channels || await Bot.getRESTGuildChannels(private_guild).catch(() => undefined);
     if (!CHANNELS) return;
 
-    if (!CHANNELS.filter(c => c.parentID == owo_grind_category).map(c => c.id).includes(message.channel.id)) return;
+    if (!CHANNELS.filter(c => c.parentID == channels.owo_grind_category).map(c => c.id).includes(message.channel.id)) return;
 
     if (message.author.id == bots.OwO) return;
 
