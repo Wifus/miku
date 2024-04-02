@@ -14,17 +14,21 @@ Bot.on('ready', async () => {
 });
 
 Bot.on('messageCreate', async (message) => {
-    if (message.guildID != private_guild) return;
+    try {
+        if (message.guildID != private_guild) return;
 
-    const CHANNELS = Bot.guilds.get(private_guild)?.channels || await Bot.getRESTGuildChannels(private_guild).catch(() => undefined);
-    if (!CHANNELS) return;
+        const CHANNELS = Bot.guilds.get(private_guild)?.channels || await Bot.getRESTGuildChannels(private_guild).catch(() => undefined);
+        if (!CHANNELS) return;
 
-    if (!CHANNELS.filter(c => c.parentID == channels.owo_grind_category).map(c => c.id).includes(message.channel.id)) return;
+        if (!CHANNELS.filter(c => c.parentID == channels.owo_grind_category).map(c => c.id).includes(message.channel.id)) return;
 
-    if (message.author.id == bots.OwO) return;
-    if (message.author.id == Bot.user.id) return;
+        if (message.author.id == bots.OwO) return;
+        if (message.author.id == Bot.user.id) return;
 
-    await message.delete();
+        await message.delete();
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 async function downloadImageToBuffer(url) {
